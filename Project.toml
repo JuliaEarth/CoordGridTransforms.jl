@@ -3,5 +3,21 @@ uuid = "1cf1ec0c-22f7-4062-925b-8db09db48fc3"
 authors = ["Elias Carvalho <eliascarvdev@gmail.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+CoordRefSystems = "b46f11dc-f210-4604-bfba-323c1ec968cb"
+DataDeps = "124859b0-ceae-595e-8997-d05f6a7a8dfe"
+GeoTIFF = "c470187e-1474-4b46-a068-a417f109db17"
+Interpolations = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
+MappedArrays = "dbb5928d-eab1-5f90-85c2-b9b0edb7c900"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+
 [compat]
+CoordRefSystems = "0.16"
+DataDeps = "0.7"
+GeoTIFF = "0.3"
+Interpolations = "0.15"
+MappedArrays = "0.4"
+StaticArrays = "1.9"
+Unitful = "1.21"
 julia = "1.10"
