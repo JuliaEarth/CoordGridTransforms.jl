@@ -99,6 +99,8 @@ end
 # IMPLEMENTATIONS
 # ----------------
 
+geotiff(::Type{NAD83CSRS{3}}, ::Type{NAD83CSRS{4}}) = "ca_nrc_NAD83v70VG.tif"
+
 geotiff(::Type{SAD69}, ::Type{SIRGAS2000}) = "br_ibge_SAD69_003.tif"
 
 geotiff(::Type{SAD96}, ::Type{SIRGAS2000}) = "br_ibge_SAD96_003.tif"

@@ -3,6 +3,7 @@
 # ------------------------------------------------------------------
 
 include("transforms/hgridshift.jl")
+include("transforms/pointmotion.jl")
 
 # ----------------
 # IMPLEMENTATIONS
@@ -19,3 +20,6 @@ include("transforms/hgridshift.jl")
 
 # https://epsg.org/transformation_5529/SAD69-96-to-SIRGAS-2000-1.html
 @hgridshift SAD96 SIRGAS2000
+
+# https://epsg.org/transformation_10528/NAD83-CSRS-v3-to-NAD83-CSRS-v4-3.html
+@pointmotion NAD83CSRS{3} NAD83CSRS{4}
