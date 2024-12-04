@@ -105,7 +105,7 @@ geotiff(::Type{NAD27}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA27SCRS.tif"
 
 geotiff(::Type{NAD27}, ::Type{NAD83CSRS{3}}) = "ca_nrc_TO27CSv1.tif"
 
-# TODO: unsupported GeoTIFF format
+# TODO: unsupported GeoTIFF format: StridedTaggedImage
 # geotiff(::Type{NAD27}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_27_05.tif"
 
 # geotiff(::Type{NAD83}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA83SCRS.tif"
@@ -114,7 +114,7 @@ geotiff(::Type{NAD27}, ::Type{NAD83CSRS{3}}) = "ca_nrc_TO27CSv1.tif"
 
 # geotiff(::Type{NAD83}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_93_05.tif"
 
-# TODO: grid files not found
+# TODO: grid files not found in PROJ CDN
 # geotiff(::Type{NAD83}, ::Type{NAD83CSRS{6}}) = ""
 
 # geotiff(::Type{NAD83}, ::Type{NAD83CSRS{7}}) = ""
