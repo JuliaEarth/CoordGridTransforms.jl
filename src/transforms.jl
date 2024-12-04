@@ -19,3 +19,24 @@ include("transforms/hgridshift.jl")
 
 # https://epsg.org/transformation_5529/SAD69-96-to-SIRGAS-2000-1.html
 @hgridshift SAD96 SIRGAS2000
+
+# https://epsg.org/transformation_1241/NAD27-to-NAD83-1.html
+@hgridshift NAD27 NAD83
+
+# https://epsg.org/transformation_9239/NAD27-to-NAD83-CSRS-v2-1.html
+@hgridshift NAD27 NAD83CSRS{2}
+
+# https://epsg.org/transformation_9107/NAD27-to-NAD83-CSRS-v3-5.html
+@hgridshift NAD27 NAD83CSRS{3}
+
+# https://epsg.org/transformation_9115/NAD27-to-NAD83-CSRS-v4-10.html
+@hgridshift NAD27 NAD83CSRS{4}
+
+# https://epsg.org/transformation_9241/NAD83-to-NAD83-CSRS-v2-1.html
+@hgridshift NAD83 NAD83CSRS{2}
+
+# https://epsg.org/transformation_9110/NAD83-to-NAD83-CSRS-v3-5.html
+@hgridshift NAD83 NAD83CSRS{3}
+
+# https://epsg.org/transformation_9119/NAD83-to-NAD83-CSRS-v4-9.html
+@hgridshift NAD83 NAD83CSRS{4}
