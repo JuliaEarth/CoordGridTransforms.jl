@@ -24,8 +24,8 @@ macro pointmotion(Datumₛ, Datumₜ)
 end
 
 function pointmotionfwd(Datumₛ, Datumₜ, (lat, lon, alt))
-  λ = ustrip(deg2rad(lon))
-  ϕ = ustrip(deg2rad(lat))
+  λ = ustrip(rad, lon)
+  ϕ = ustrip(rad, lat)
   h = ustrip(m, alt)
 
   λₛ, ϕₛ, hₛ = pointmotionparams(Datumₛ, Datumₜ, lon, lat, ϕ, h)
@@ -33,8 +33,8 @@ function pointmotionfwd(Datumₛ, Datumₜ, (lat, lon, alt))
   ϕ′ = ϕ + ϕₛ
   h′ = h + hₛ
 
-  lat′ = rad2deg(ϕ′) * °
-  lon′ = rad2deg(λ′) * °
+  lon′ = uconvert(unit(lon), λ′ * rad)
+  lat′ = uconvert(unit(lat), ϕ′ * rad)
   alt′ = uconvert(unit(alt), h′ * m)
 
   lat′, lon′, alt′
