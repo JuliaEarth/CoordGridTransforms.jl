@@ -13,7 +13,7 @@ StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
-CoordRefSystems = "0.16"
+CoordRefSystems = "0.16.1"
 DataDeps = "0.7"
 GeoTIFF = "0.3"
 Interpolations = "0.15"

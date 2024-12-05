@@ -99,6 +99,26 @@ end
 # IMPLEMENTATIONS
 # ----------------
 
+geotiff(::Type{NAD27}, ::Type{NAD83}) = "us_noaa_conus.tif"
+
+geotiff(::Type{NAD27}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA27SCRS.tif"
+
+geotiff(::Type{NAD27}, ::Type{NAD83CSRS{3}}) = "ca_nrc_TO27CSv1.tif"
+
+# TODO: unsupported GeoTIFF format: StridedTaggedImage
+# geotiff(::Type{NAD27}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_27_05.tif"
+
+# geotiff(::Type{NAD83}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA83SCRS.tif"
+
+# geotiff(::Type{NAD83}, ::Type{NAD83CSRS{3}}) = "ca_nrc_ON83CSv1.tif"
+
+# geotiff(::Type{NAD83}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_93_05.tif"
+
+# TODO: grid files not found in PROJ CDN
+# geotiff(::Type{NAD83}, ::Type{NAD83CSRS{6}}) = ""
+
+# geotiff(::Type{NAD83}, ::Type{NAD83CSRS{7}}) = ""
+
 geotiff(::Type{SAD69}, ::Type{SIRGAS2000}) = "br_ibge_SAD69_003.tif"
 
 geotiff(::Type{SAD96}, ::Type{SIRGAS2000}) = "br_ibge_SAD96_003.tif"
