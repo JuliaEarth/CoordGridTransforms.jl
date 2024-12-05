@@ -7,7 +7,8 @@ module CoordGridTransforms
 using CoordRefSystems
 
 using Unitful: m, °
-using Unitful: unit, ustrip, uconvert, numtype
+using Unitful: unit, numtype
+using Unitful: uconvert, ustrip
 using StaticArrays: SVector, SA
 using MappedArrays: mappedarray
 using Interpolations: interpolate, Gridded, Linear

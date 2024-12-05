@@ -5,8 +5,7 @@
 """
     @pointmotion Datumₛ Datumₜ
 
-Point Motion transform that uses grid interpolation
-to calculate velocity of the coordinates.
+Point Motion transform that moves points based on interpolated velocities.
 
 ## References
 
