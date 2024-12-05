@@ -47,4 +47,58 @@
   c1 = LatLonAlt{NAD83CSRS{3}}(T(65), T(-85), T(1))
   c2 = convert(LatLonAlt{NAD83CSRS{4}}, c1)
   @test allapprox(c2, LatLonAlt{NAD83CSRS{4}}(T(64.99999994796659), T(-84.99999974705766), T(1.0365328033839258)))
+
+  # NAD83(CSRS)v3 to NAD83(CSRS)v6
+  c1 = LatLonAlt{NAD83CSRS{3}}(T(60), T(-90), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{6}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{6}}(T(59.999999938434975), T(-89.99999975034973), T(1.037781248477583)))
+
+  c1 = LatLonAlt{NAD83CSRS{3}}(T(65), T(-85), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{6}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{6}}(T(64.99999994796659), T(-84.99999974705766), T(1.0365328033839258)))
+
+  # NAD83(CSRS)v3 to NAD83(CSRS)v7
+  c1 = LatLonAlt{NAD83CSRS{3}}(T(60), T(-90), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{7}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{7}}(T(59.999999938434975), T(-89.99999975034973), T(1.037781248477583)))
+
+  c1 = LatLonAlt{NAD83CSRS{3}}(T(65), T(-85), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{7}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{7}}(T(64.99999994796659), T(-84.99999974705766), T(1.0365328033839258)))
+
+  # NAD83(CSRS)v3 to NAD83(CSRS)v8
+  c1 = LatLonAlt{NAD83CSRS{3}}(T(60), T(-90), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{8}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{8}}(T(59.999999938434975), T(-89.99999975034973), T(1.037781248477583)))
+
+  c1 = LatLonAlt{NAD83CSRS{3}}(T(65), T(-85), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{8}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{8}}(T(64.99999994796659), T(-84.99999974705766), T(1.0365328033839258)))
+
+  # NAD83(CSRS)v4 to NAD83(CSRS)v6
+  c1 = LatLonAlt{NAD83CSRS{4}}(T(60), T(-90), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{6}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{6}}(T(59.999999938434975), T(-89.99999975034973), T(1.037781248477583)))
+
+  c1 = LatLonAlt{NAD83CSRS{4}}(T(65), T(-85), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{6}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{6}}(T(64.99999994796659), T(-84.99999974705766), T(1.0365328033839258)))
+
+  # NAD83(CSRS)v4 to NAD83(CSRS)v7
+  c1 = LatLonAlt{NAD83CSRS{4}}(T(60), T(-90), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{7}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{7}}(T(59.999999938434975), T(-89.99999975034973), T(1.037781248477583)))
+
+  c1 = LatLonAlt{NAD83CSRS{4}}(T(65), T(-85), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{7}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{7}}(T(64.99999994796659), T(-84.99999974705766), T(1.0365328033839258)))
+
+  # NAD83(CSRS)v4 to NAD83(CSRS)v8
+  c1 = LatLonAlt{NAD83CSRS{4}}(T(60), T(-90), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{8}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{8}}(T(59.999999938434975), T(-89.99999975034973), T(1.037781248477583)))
+
+  c1 = LatLonAlt{NAD83CSRS{4}}(T(65), T(-85), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{8}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{8}}(T(64.99999994796659), T(-84.99999974705766), T(1.0365328033839258)))
 end
