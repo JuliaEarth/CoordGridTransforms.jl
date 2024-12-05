@@ -10,7 +10,7 @@ to calculate coordinate offsets.
 
 ## References
 
-* Section 4.4.6 of EPSG Guidance Note 7-2: <https://epsg.org/guidance-notes.html>
+* Section 4.4.5 of EPSG Guidance Note 7-2: <https://epsg.org/guidance-notes.html>
 """
 macro hgridshift(Datumₛ, Datumₜ)
   expr = quote
