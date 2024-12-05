@@ -34,4 +34,17 @@
   c1 = LatLon{SAD96}(T(-10), T(-40))
   c2 = convert(LatLon{SIRGAS2000}, c1)
   @test allapprox(c2, LatLon{SIRGAS2000}(T(-10.000428915126209), T(-40.00037063898611)))
+
+  # Point Motion with Velocity Grids
+  # note: the results differ from PROJ because we use the standard implementation described
+  # in the EPSG Guidance Note 7-2, Section 4.4.6, Geographic Offset by Interpolation of Gridded Velocity Data
+
+  # NAD83(CSRS)v3 to NAD83(CSRS)v4
+  c1 = LatLonAlt{NAD83CSRS{3}}(T(60), T(-90), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{4}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{4}}(T(59.999999938434975), T(-89.99999975034973), T(1.037781248477583)))
+
+  c1 = LatLonAlt{NAD83CSRS{3}}(T(65), T(-85), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{4}}, c1)
+  @test allapprox(c2, LatLonAlt{NAD83CSRS{4}}(T(64.99999994796659), T(-84.99999974705766), T(1.0365328033839258)))
 end

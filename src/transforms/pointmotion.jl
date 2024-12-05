@@ -24,8 +24,8 @@ macro pointmotion(Datumₛ, Datumₜ)
 end
 
 function pointmotionfwd(Datumₛ, Datumₜ, (lat, lon, alt))
-  λ = ustrip(rad, lon)
-  ϕ = ustrip(rad, lat)
+  λ = ustrip(deg2rad(lon))
+  ϕ = ustrip(deg2rad(lat))
   h = ustrip(m, alt)
 
   λₛ, ϕₛ, hₛ = pointmotionparams(Datumₛ, Datumₜ, lon, lat, ϕ, h)
@@ -33,8 +33,8 @@ function pointmotionfwd(Datumₛ, Datumₜ, (lat, lon, alt))
   ϕ′ = ϕ + ϕₛ
   h′ = h + hₛ
 
-  lon′ = uconvert(unit(lon), λ′ * rad)
-  lat′ = uconvert(unit(lat), ϕ′ * rad)
+  lon′ = rad2deg(λ′) * °
+  lat′ = rad2deg(ϕ′) * °
   alt′ = uconvert(unit(alt), h′ * m)
 
   lat′, lon′, alt′
@@ -49,7 +49,7 @@ function pointmotionparams(Datumₛ, Datumₜ, lon, lat, ϕ, h)
   interp = interpolator(Datumₛ, Datumₜ)
   itp = interp(ustrip(lon), ustrip(lat))
   # type assertion is necessary for type stability
-  # convert milimeters to meters
+  # convert millimeters to meters
   eᵥ::T = T(itp[1]) / 1000
   nᵥ::T = T(itp[2]) / 1000
   uᵥ::T = T(itp[3]) / 1000
