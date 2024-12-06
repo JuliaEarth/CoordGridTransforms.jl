@@ -3,6 +3,24 @@
   # note: the results differ from PROJ because we use the standard implementation described
   # in the EPSG Guidance Note 7-2, Section 4.4.5, Geographic Offset by Interpolation of Gridded Offset Data
 
+  # ISN93 to ISN2016
+  c1 = LatLon{ISN93}(T(65), T(-19))
+  c2 = convert(LatLon{ISN2016}, c1)
+  @test allapprox(c2, LatLon{ISN2016}(T(65.00000469860723), T(-19.000005523900196)))
+
+  c1 = LatLon{ISN93}(T(65.5), T(-18.5))
+  c2 = convert(LatLon{ISN2016}, c1)
+  @test allapprox(c2, LatLon{ISN2016}(T(65.50000484426457), T(-18.500005780253733)))
+
+  # ISN2004 to ISN2016
+  c1 = LatLon{ISN2004}(T(65), T(-19))
+  c2 = convert(LatLon{ISN2016}, c1)
+  @test allapprox(c2, LatLon{ISN2016}(T(65.0000026741597), T(-19.000002750801873)))
+
+  c1 = LatLon{ISN2004}(T(65.5), T(-18.5))
+  c2 = convert(LatLon{ISN2016}, c1)
+  @test allapprox(c2, LatLon{ISN2016}(T(65.50000273493572), T(-18.500002761930126)))
+
   # NAD27 to NAD83
   c1 = LatLon{NAD27}(T(30), -T(90))
   c2 = convert(LatLon{NAD83}, c1)
