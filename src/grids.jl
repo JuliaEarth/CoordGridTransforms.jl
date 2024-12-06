@@ -99,6 +99,10 @@ end
 # IMPLEMENTATIONS
 # ----------------
 
+geotiff(::Type{ISN93}, ::Type{ISN2016}) = "is_lmi_ISN93_ISN2016.tif"
+
+geotiff(::Type{ISN2004}, ::Type{ISN2016}) = "is_lmi_ISN2004_ISN2016.tif"
+
 geotiff(::Type{NAD27}, ::Type{NAD83}) = "us_noaa_conus.tif"
 
 geotiff(::Type{NAD27}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA27SCRS.tif"

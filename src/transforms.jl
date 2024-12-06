@@ -17,6 +17,12 @@ include("transforms/hgridshift.jl")
 # EPSG Database: https://epsg.org/search/by-name
 # PROJ source code: https://github.com/OSGeo/PROJ/blob/master/src/datums.cpp
 
+# https://epsg.org/transformation_9232/ISN93-to-ISN2016-1.html
+@hgridshift ISN93 ISN2016
+
+# https://epsg.org/transformation_9233/ISN2004-to-ISN2016-1.html
+@hgridshift ISN2004 ISN2016
+
 # https://epsg.org/transformation_1241/NAD27-to-NAD83-1.html
 @hgridshift NAD27 NAD83
 
