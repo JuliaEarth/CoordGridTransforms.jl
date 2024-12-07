@@ -2,9 +2,10 @@
 
 [![][build-img]][build-url] [![][codecov-img]][codecov-url]
 
-CoordGridTransforms.jl is a extension for the [CoordRefSystems.jl](https://github.com/JuliaEarth/CoordRefSystems.jl) package
-that adds support grid transforms that require GeoTIFF files.
-For now, only grids from the [PROJ CDN](https://cdn.proj.org/) are supported.
+This package adds datum conversions with [offset grids](https://cdn.proj.org) to the
+[CoordRefSystems.jl](https://github.com/JuliaEarth/CoordRefSystems.jl) package.
+
+It is developed as a separate package because of its additional dependencies.
 
 ## Installation
 
