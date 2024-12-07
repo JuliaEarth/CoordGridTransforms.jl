@@ -99,6 +99,18 @@ end
 # IMPLEMENTATIONS
 # ----------------
 
+geotiff(::Type{Datum73}, ::Type{<:ETRF}) = "pt_dgt_D73_ETRS89_geo.tif"
+
+geotiff(::Type{DHDN}, ::Type{<:ETRF}) = "de_adv_BETA2007.tif"
+
+geotiff(::Type{ED50}, ::Type{<:ETRF}) = "es_cat_icgc_100800401.tif"
+
+geotiff(::Type{ISN93}, ::Type{ISN2016}) = "is_lmi_ISN93_ISN2016.tif"
+
+geotiff(::Type{ISN2004}, ::Type{ISN2016}) = "is_lmi_ISN2004_ISN2016.tif"
+
+geotiff(::Type{Lisbon1937}, ::Type{<:ETRF}) = "pt_dgt_DLx_ETRS89_geo.tif"
+
 geotiff(::Type{NAD27}, ::Type{NAD83}) = "us_noaa_conus.tif"
 
 geotiff(::Type{NAD27}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA27SCRS.tif"
@@ -132,6 +144,11 @@ geotiff(::Type{NAD83CSRS{4}}, ::Type{NAD83CSRS{6}}) = "ca_nrc_NAD83v70VG.tif"
 geotiff(::Type{NAD83CSRS{4}}, ::Type{NAD83CSRS{7}}) = "ca_nrc_NAD83v70VG.tif"
 
 geotiff(::Type{NAD83CSRS{4}}, ::Type{NAD83CSRS{8}}) = "ca_nrc_NAD83v70VG.tif"
+
+geotiff(::Type{OSGB36}, ::Type{<:ETRF}) = "uk_os_OSTN15_NTv2_OSGBtoETRS.tif"
+
+# TODO: unsupported GeoTIFF format: StridedTaggedImage
+# geotiff(::Type{RD83}, ::Type{<:ETRF}) = "de_geosn_NTv2_SN.tif"
 
 geotiff(::Type{SAD69}, ::Type{SIRGAS2000}) = "br_ibge_SAD69_003.tif"
 
