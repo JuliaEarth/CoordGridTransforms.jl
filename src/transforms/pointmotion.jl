@@ -32,6 +32,7 @@ function pointmotionfwd(Datumₛ, Datumₜ, (lat, lon, alt))
   ϕ′ = ϕ + ϕₛ
   h′ = h + hₛ
 
+  # https://github.com/PainterQubits/Unitful.jl/issues/753
   lon′ = rad2deg(λ′) * °
   lat′ = rad2deg(ϕ′) * °
   alt′ = uconvert(unit(alt), h′ * m)
