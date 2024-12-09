@@ -3,6 +3,7 @@
 # ------------------------------------------------------------------
 
 include("transforms/hgridshift.jl")
+include("transforms/pointmotion.jl")
 
 # ----------------
 # IMPLEMENTATIONS
@@ -49,3 +50,24 @@ include("transforms/hgridshift.jl")
 
 # https://epsg.org/transformation_5529/SAD69-96-to-SIRGAS-2000-1.html
 @hgridshift SAD96 SIRGAS2000
+
+# https://epsg.org/transformation_10528/NAD83-CSRS-v3-to-NAD83-CSRS-v4-3.html
+@pointmotion NAD83CSRS{3} NAD83CSRS{4}
+
+# https://epsg.org/transformation_10530/NAD83-CSRS-v3-to-NAD83-CSRS-v6-3.html
+@pointmotion NAD83CSRS{3} NAD83CSRS{6}
+
+# https://epsg.org/transformation_10534/NAD83-CSRS-v3-to-NAD83-CSRS-v7-2.html
+@pointmotion NAD83CSRS{3} NAD83CSRS{7}
+
+# https://epsg.org/transformation_10535/NAD83-CSRS-v3-to-NAD83-CSRS-v8-2.html
+@pointmotion NAD83CSRS{3} NAD83CSRS{8}
+
+# https://epsg.org/transformation_10537/NAD83-CSRS-v4-to-NAD83-CSRS-v6-3.html
+@pointmotion NAD83CSRS{4} NAD83CSRS{6}
+
+# https://epsg.org/transformation_10538/NAD83-CSRS-v4-to-NAD83-CSRS-v7-2.html
+@pointmotion NAD83CSRS{4} NAD83CSRS{7}
+
+# https://epsg.org/transformation_10539/NAD83-CSRS-v4-to-NAD83-CSRS-v8-2.html
+@pointmotion NAD83CSRS{4} NAD83CSRS{8}
