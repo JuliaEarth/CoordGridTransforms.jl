@@ -38,8 +38,9 @@ function interpolator(Datumₛ, Datumₜ)
   # lon lat range
   m, n = size(grid)
   A, b = GeoTIFF.affineparams2D(GeoTIFF.metadata(geotiff))
+  # PixelIsPoint convention
   lon₀, lat₀ = muladd(A, SA[0, 0], b)
-  lonₘ, latₙ = muladd(A, SA[m, n], b)
+  lonₘ, latₙ = muladd(A, SA[m - 1, n - 1], b)
 
   # Interpolations.jl requires ordered ranges
   reverselon = lon₀ > lonₘ
