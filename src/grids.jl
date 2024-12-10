@@ -146,6 +146,12 @@ geotiff(::Type{NAD83CSRS{4}}, ::Type{NAD83CSRS{7}}) = "ca_nrc_NAD83v70VG.tif"
 
 geotiff(::Type{NAD83CSRS{4}}, ::Type{NAD83CSRS{8}}) = "ca_nrc_NAD83v70VG.tif"
 
+geotiff(::Type{NTF}, ::Type{RGF93v1}) = "fr_ign_gr3df97a.tif"
+
+geotiff(::Type{NTF}, ::Type{RGF93v2}) = "fr_ign_gr3df97a.tif"
+
+geotiff(::Type{NTF}, ::Type{RGF93v2b}) = "fr_ign_gr3df97a.tif"
+
 geotiff(::Type{OSGB36}, ::Type{<:ETRF}) = "uk_os_OSTN15_NTv2_OSGBtoETRS.tif"
 
 # TODO: unsupported GeoTIFF format: StridedTaggedImage

@@ -168,4 +168,44 @@
   c1 = LatLonAlt{NAD83CSRS{4}}(T(65), T(-85), T(1))
   c2 = convert(LatLonAlt{NAD83CSRS{8}}, c1)
   @test allapprox(c2, LatLonAlt{NAD83CSRS{8}}(T(64.99999991631289), T(-84.99999959196361), T(1.0591111755371094)))
+
+  # NTF to RGF93v1
+  c1 = LatLon{NTF}(T(48), T(2))
+  c2 = convert(LatLon{RGF93v1}, c1)
+  @test allapprox(c2, LatLon{RGF93v1}(T(47.99993607658557), T(1.9992829984694425)))
+  c3 = convert(LatLon{NTF}, c2)
+  @test allapprox(c3, c1)
+
+  # example from  EPSG Guidance Note 7-2, Section 4.4.1.3, Geocentric translations by grid interpolation (France)
+  c1 = LatLon{NTF}(T(48.84451225), T(2.4256718611111108))
+  c2 = convert(LatLon{RGF93v1}, c1)
+  @test allapprox(c2, LatLon{RGF93v1}(T(48.84444583333334), T(2.4249711111111107)))
+  c3 = convert(LatLon{NTF}, c2)
+  @test allapprox(c3, c1)
+
+  # NTF to RGF93v2
+  c1 = LatLon{NTF}(T(48), T(2))
+  c2 = convert(LatLon{RGF93v2}, c1)
+  @test allapprox(c2, LatLon{RGF93v2}(T(47.99993607658557), T(1.9992829984694425)))
+  c3 = convert(LatLon{NTF}, c2)
+  @test allapprox(c3, c1)
+
+  c1 = LatLon{NTF}(T(48.84451225), T(2.4256718611111108))
+  c2 = convert(LatLon{RGF93v2}, c1)
+  @test allapprox(c2, LatLon{RGF93v2}(T(48.84444583333334), T(2.4249711111111107)))
+  c3 = convert(LatLon{NTF}, c2)
+  @test allapprox(c3, c1)
+
+  # NTF to RGF93v2b
+  c1 = LatLon{NTF}(T(48), T(2))
+  c2 = convert(LatLon{RGF93v2b}, c1)
+  @test allapprox(c2, LatLon{RGF93v2b}(T(47.99993607658557), T(1.9992829984694425)))
+  c3 = convert(LatLon{NTF}, c2)
+  @test allapprox(c3, c1)
+
+  c1 = LatLon{NTF}(T(48.84451225), T(2.4256718611111108))
+  c2 = convert(LatLon{RGF93v2b}, c1)
+  @test allapprox(c2, LatLon{RGF93v2b}(T(48.84444583333334), T(2.4249711111111107)))
+  c3 = convert(LatLon{NTF}, c2)
+  @test allapprox(c3, c1)
 end
