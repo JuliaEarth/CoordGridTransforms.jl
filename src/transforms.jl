@@ -4,7 +4,7 @@
 
 include("transforms/hgridshift.jl")
 include("transforms/pointmotion.jl")
-include("transforms/francetranslation.jl")
+include("transforms/geocgridtranslation.jl")
 
 # ----------------
 # IMPLEMENTATIONS
@@ -74,10 +74,10 @@ include("transforms/francetranslation.jl")
 @pointmotion NAD83CSRS{4} NAD83CSRS{8}
 
 # https://epsg.org/transformation_9327/NTF-to-RGF93-v1-1.html
-@francetranslation NTF RGF93v1 (δx=-168.0, δy=-60.0, δz=320.0)
+@geocgridtranslation NTF RGF93v1 (δx=-168.0, δy=-60.0, δz=320.0)
 
 # https://epsg.org/transformation_9888/NTF-to-RGF93-v2-1.html
-@francetranslation NTF RGF93v2 (δx=-168.0, δy=-60.0, δz=320.0)
+@geocgridtranslation NTF RGF93v2 (δx=-168.0, δy=-60.0, δz=320.0)
 
 # https://epsg.org/transformation_9889/NTF-to-RGF93-v2b-1.html
-@francetranslation NTF RGF93v2b (δx=-168.0, δy=-60.0, δz=320.0)
+@geocgridtranslation NTF RGF93v2b (δx=-168.0, δy=-60.0, δz=320.0)
