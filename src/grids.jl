@@ -44,7 +44,7 @@ function interpolators(Datumₛ, Datumₜ)
 
   # download geotiff from PROJ CDN
   file = downloadgeotiff(Datumₛ, Datumₜ)
-  geotiff = GeoTIFF.load(file)
+  geotiff = GeoTIFF.load(file, verbose=false)
 
   # interpolator of each grid
   interps = if geotiff isa GeoTIFF.GeoTIFFImageIterator
@@ -151,14 +151,13 @@ geotiff(::Type{NAD27}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA27SCRS.tif"
 
 geotiff(::Type{NAD27}, ::Type{NAD83CSRS{3}}) = "ca_nrc_TO27CSv1.tif"
 
-# TODO: unsupported GeoTIFF format: StridedTaggedImage
-# geotiff(::Type{NAD27}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_27_05.tif"
+geotiff(::Type{NAD27}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_27_05.tif"
 
-# geotiff(::Type{NAD83}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA83SCRS.tif"
+geotiff(::Type{NAD83}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA83SCRS.tif"
 
-# geotiff(::Type{NAD83}, ::Type{NAD83CSRS{3}}) = "ca_nrc_ON83CSv1.tif"
+geotiff(::Type{NAD83}, ::Type{NAD83CSRS{3}}) = "ca_nrc_ON83CSv1.tif"
 
-# geotiff(::Type{NAD83}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_93_05.tif"
+geotiff(::Type{NAD83}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_93_05.tif"
 
 # TODO: grid files not found in PROJ CDN
 # geotiff(::Type{NAD83}, ::Type{NAD83CSRS{6}}) = ""
@@ -187,8 +186,7 @@ geotiff(::Type{NTF}, ::Type{RGF93v2b}) = "fr_ign_gr3df97a.tif"
 
 geotiff(::Type{OSGB36}, ::Type{<:ETRF}) = "uk_os_OSTN15_NTv2_OSGBtoETRS.tif"
 
-# TODO: unsupported GeoTIFF format: StridedTaggedImage
-# geotiff(::Type{RD83}, ::Type{<:ETRF}) = "de_geosn_NTv2_SN.tif"
+geotiff(::Type{RD83}, ::Type{<:ETRF}) = "de_geosn_NTv2_SN.tif"
 
 geotiff(::Type{SAD69}, ::Type{SIRGAS2000}) = "br_ibge_SAD69_003.tif"
 
