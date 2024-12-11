@@ -49,6 +49,9 @@ include("transforms/geocgridtranslation.jl")
 # https://epsg.org/transformation_7709/OSGB36-to-ETRS89-2.html
 @hgridshift OSGB36 ETRF
 
+# https://epsg.org/transformation_10677/PD-83-to-ETRS89-2.html
+@hgridshift PD83 ETRF
+
 # https://epsg.org/transformation_5529/SAD69-96-to-SIRGAS-2000-1.html
 @hgridshift SAD96 SIRGAS2000
 
