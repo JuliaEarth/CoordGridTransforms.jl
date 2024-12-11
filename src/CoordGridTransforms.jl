@@ -11,7 +11,7 @@ using Unitful: unit, numtype
 using Unitful: uconvert, ustrip
 using StaticArrays: SVector, SA
 using MappedArrays: mappedarray
-using Interpolations: interpolate, Gridded, Linear
+using Interpolations: interpolate, Gridded, Linear, bounds
 using DataDeps: @datadep_str, register, DataDep
 
 import GeoTIFF

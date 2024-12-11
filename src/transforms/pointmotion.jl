@@ -27,7 +27,7 @@ function pointmotionfwd(Datumₛ, Datumₜ, (lat, lon, alt))
   ϕ = ustrip(deg2rad(lat))
   h = ustrip(m, alt)
 
-  λₛ, ϕₛ, hₛ = pointmotionparams(Datumₛ, Datumₜ, lon, lat, ϕ, h)
+  λₛ, ϕₛ, hₛ = pointmotionparams(Datumₛ, Datumₜ, lat, lon, ϕ, h)
   λ′ = λ + λₛ
   ϕ′ = ϕ + ϕₛ
   h′ = h + hₛ
@@ -40,14 +40,13 @@ function pointmotionfwd(Datumₛ, Datumₜ, (lat, lon, alt))
   lat′, lon′, alt′
 end
 
-function pointmotionparams(Datumₛ, Datumₜ, lon, lat, ϕ, h)
+function pointmotionparams(Datumₛ, Datumₜ, lat, lon, ϕ, h)
   🌎 = ellipsoid(Datumₛ)
   T = numtype(lon)
   a = T(ustrip(m, majoraxis(🌎)))
   e² = T(eccentricity²(🌎))
 
-  interp = interpolator(Datumₛ, Datumₜ)
-  itp = interp(ustrip(lon), ustrip(lat))
+  itp = interpolatepoint(Datumₛ, Datumₜ, lat, lon)
   # type assertion is necessary for type stability
   # convert millimeters to meters
   eᵥ::T = T(itp[1]) / 1000

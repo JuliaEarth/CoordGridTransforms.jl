@@ -12,13 +12,26 @@ function geotiff end
 # cache interpolator objects to avoid interpolating the same grid twice
 const INTERPOLATOR = IdDict()
 
+function interpolatepoint(Datumₛ, Datumₜ, lat, lon)
+  lat′ = ustrip(lat)
+  lon′ = ustrip(lon)
+  interps = interpolators(Datumₛ, Datumₜ)
+  for interp in interps
+    (lonmin, lonmax), (latmin, latmax) = bounds(interp)
+    if lonmin < lon′ < lonmax && latmin < lat′ < latmax
+      return interp(lon′, lat′)
+    end
+  end
+  nothing
+end
+
 """
     interpolator(Datumₛ, Datumₜ)
 
 Linear interpolation of GeoTIFF grid that converts `Datumₛ` to `Datumₜ`.
 All of the GeoTIFF channels are combined into the interpolated grid as a vector.
 """
-function interpolator(Datumₛ, Datumₜ)
+function interpolators(Datumₛ, Datumₜ)
   if haskey(INTERPOLATOR, (Datumₛ, Datumₜ))
     return INTERPOLATOR[(Datumₛ, Datumₜ)]
   end
@@ -27,7 +40,20 @@ function interpolator(Datumₛ, Datumₜ)
   file = downloadgeotiff(Datumₛ, Datumₜ)
   geotiff = GeoTIFF.load(file)
 
-  # construct the interpolation grid
+  # interpolator of each grid
+  interps = if geotiff isa GeoTIFF.GeoTIFFImageIterator
+    map(interpolator, geotiff)
+  else
+    [interpolator(geotiff)]
+  end
+
+  # store interpolators in cache
+  INTERPOLATOR[(Datumₛ, Datumₜ)] = interps
+
+  interps
+end
+
+function interpolator(geotiff)
   img = GeoTIFF.image(geotiff)
   grid = mappedarray(img) do color
     N = GeoTIFF.nchannels(color)
@@ -59,12 +85,8 @@ function interpolator(Datumₛ, Datumₜ)
     grid = @view grid[:, n:-1:1]
   end
 
-  # create the interpolation
-  interp = interpolate((lonrange, latrange), grid, Gridded(Linear()))
-
-  INTERPOLATOR[(Datumₛ, Datumₜ)] = interp
-
-  interp
+  # create the interpolator
+  interpolate((lonrange, latrange), grid, Gridded(Linear()))
 end
 
 """

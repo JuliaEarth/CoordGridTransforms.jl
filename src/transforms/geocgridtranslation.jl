@@ -48,8 +48,7 @@ function geocgridtranslationparams(Datumₛ, Datumₜ, xyz)
   T = numtype(eltype(xyz))
   # target latlon coordinates for interpolation
   latlon = convert(LatLon, Cartesian{Datumₜ}(xyz...))
-  interp = interpolator(Datumₛ, Datumₜ)
-  itp = interp(ustrip(latlon.lon), ustrip(latlon.lat))
+  itp = interpolatepoint(Datumₛ, Datumₜ, latlon.lat, latlon.lon)
   # type assertion is necessary for type stability
   δx::T = T(itp[1])
   δy::T = T(itp[2])
