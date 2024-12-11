@@ -12,6 +12,12 @@ function geotiff end
 # cache interpolator objects to avoid interpolating the same grid twice
 const INTERPOLATOR = IdDict()
 
+"""
+    interpolatepoint(Datumₛ, Datumₜ, lat, lon)
+
+Interpolated value in the grid that convert `Datumₛ` to `Datumₜ` 
+of the point with latitude `lat` and longitude `lon`.
+"""
 function interpolatepoint(Datumₛ, Datumₜ, lat, lon)
   lat′ = ustrip(lat)
   lon′ = ustrip(lon)
@@ -22,14 +28,14 @@ function interpolatepoint(Datumₛ, Datumₜ, lat, lon)
       return interp(lon′, lat′)
     end
   end
-  nothing
+  throw(ArgumentError("coordinates outside of the transform domain"))
 end
 
 """
-    interpolator(Datumₛ, Datumₜ)
+    interpolators(Datumₛ, Datumₜ)
 
-Linear interpolation of GeoTIFF grid that converts `Datumₛ` to `Datumₜ`.
-All of the GeoTIFF channels are combined into the interpolated grid as a vector.
+Linear interpolators of the GeoTIFF grid that converts `Datumₛ` to `Datumₜ`.
+All of the GeoTIFF channels are combined into the interpolated grids as a vector.
 """
 function interpolators(Datumₛ, Datumₜ)
   if haskey(INTERPOLATOR, (Datumₛ, Datumₜ))
@@ -53,6 +59,11 @@ function interpolators(Datumₛ, Datumₜ)
   interps
 end
 
+"""
+    interpolator(geotiff)
+
+Linear interpolator of the `geotiff` grid.
+"""
 function interpolator(geotiff)
   img = GeoTIFF.image(geotiff)
   grid = mappedarray(img) do color
