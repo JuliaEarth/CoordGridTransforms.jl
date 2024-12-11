@@ -15,7 +15,7 @@ Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 [compat]
 CoordRefSystems = "0.16.2"
 DataDeps = "0.7"
-GeoTIFF = "0.3"
+GeoTIFF = "0.3, 0.4"
 Interpolations = "0.15"
 MappedArrays = "0.4"
 StaticArrays = "1.9"
