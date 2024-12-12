@@ -137,7 +137,7 @@
   c1 = LatLon{PD83}(T(51.14), T(11.45))
   c2 = convert(LatLon{ETRFLatest}, c1)
   @test allapprox(c2, LatLon{ETRFLatest}(T(51.138737511105006), T(11.448580215003755)))
-  
+
   # RD/83 to ETRF (ETRS89)
   c1 = LatLon{RD83}(T(52.25), T(12.75))
   c2 = convert(LatLon{ETRFLatest}, c1)
