@@ -84,6 +84,42 @@
   c2 = convert(LatLon{NAD83CSRS{3}}, c1)
   @test allapprox(c2, LatLon{NAD83CSRS{3}}(T(43.80005476944562), T(-79.2998004666633)))
 
+  # NAD27 to NAD83(CSRS)v4
+  c1 = LatLon{NAD27}(T(54.5), T(-126.2))
+  c2 = convert(LatLon{NAD83CSRS{4}}, c1)
+  @test allapprox(c2, LatLon{NAD83CSRS{4}}(T(54.499892979443075), T(-126.20167975558175)))
+
+  c1 = LatLon{NAD27}(T(55.12), T(-121))
+  c2 = convert(LatLon{NAD83CSRS{4}}, c1)
+  @test allapprox(c2, LatLon{NAD83CSRS{4}}(T(55.119936973333026), T(-121.0014464963807)))
+
+  # NAD83 to NAD83(CSRS)v2
+  c1 = LatLon{NAD83}(T(53.95), T(-68))
+  c2 = convert(LatLon{NAD83CSRS{2}}, c1)
+  @test allapprox(c2, LatLon{NAD83CSRS{2}}(T(53.95000107333336), T(-68.00000158333332)))
+
+  c1 = LatLon{NAD83}(T(45.9), T(-72.45))
+  c2 = convert(LatLon{NAD83CSRS{2}}, c1)
+  @test allapprox(c2, LatLon{NAD83CSRS{2}}(T(45.89999938499998), T(-72.44999994255556)))
+
+  # NAD83 to NAD83(CSRS)v3
+  c1 = LatLon{NAD83}(T(49), T(-85.5))
+  c2 = convert(LatLon{NAD83CSRS{3}}, c1)
+  @test allapprox(c2, LatLon{NAD83CSRS{3}}(T(48.9999931805555), T(-85.50001148055514)))
+
+  c1 = LatLon{NAD83}(T(42.16), T(-82.45))
+  c2 = convert(LatLon{NAD83CSRS{3}}, c1)
+  @test allapprox(c2, LatLon{NAD83CSRS{3}}(T(42.159997325177805), T(-82.44999242513342)))
+
+  # NAD83 to NAD83(CSRS)v4
+  c1 = LatLon{NAD83}(T(54.5), T(-126.2))
+  c2 = convert(LatLon{NAD83CSRS{4}}, c1)
+  @test allapprox(c2, LatLon{NAD83CSRS{4}}(T(54.49999997222223), T(-126.20000173833333)))
+
+  c1 = LatLon{NAD83}(T(54.08), T(-128.66))
+  c2 = convert(LatLon{NAD83CSRS{4}}, c1)
+  @test allapprox(c2, LatLon{NAD83CSRS{4}}(T(54.079998935382235), T(-128.66000092432887)))
+
   # OSGB36 to ETRF (ETRS89)
   c1 = LatLon{OSGB36}(T(55), T(-3.5))
   c2 = convert(LatLon{ETRFLatest}, c1)
@@ -101,6 +137,15 @@
   c1 = LatLon{PD83}(T(51.14), T(11.45))
   c2 = convert(LatLon{ETRFLatest}, c1)
   @test allapprox(c2, LatLon{ETRFLatest}(T(51.138737511105006), T(11.448580215003755)))
+  
+  # RD/83 to ETRF (ETRS89)
+  c1 = LatLon{RD83}(T(52.25), T(12.75))
+  c2 = convert(LatLon{ETRFLatest}, c1)
+  @test allapprox(c2, LatLon{ETRFLatest}(T(52.24861670891444), T(12.748358176151912)))
+
+  c1 = LatLon{RD83}(T(50.5), T(12.65))
+  c2 = convert(LatLon{ETRFLatest}, c1)
+  @test allapprox(c2, LatLon{ETRFLatest}(T(50.4988229786555), T(12.648406205177308)))
 
   # SAD96 to SIRGAS2000
   c1 = LatLon{SAD96}(T(-15), T(-45))
@@ -217,4 +262,8 @@
   @test allapprox(c2, LatLon{RGF93v2b}(T(48.84444583333334), T(2.4249711111111107)))
   c3 = convert(LatLon{NTF}, c2)
   @test allapprox(c3, c1)
+
+  # error: coordinates outside of the transform domain
+  c1 = LatLon{RD83}(T(65), T(25))
+  @test_throws ArgumentError convert(LatLon{ETRFLatest}, c1)
 end

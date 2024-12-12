@@ -24,14 +24,13 @@ macro hgridshift(Datumₛ, Datumₜ)
 end
 
 function hgridshiftfwd(Datumₛ, Datumₜ, (lat, lon))
-  latshift, lonshift = hgridshiftparams(Datumₛ, Datumₜ, (lat, lon))
+  latshift, lonshift = hgridshiftparams(Datumₛ, Datumₜ, lat, lon)
   lat + latshift, lon + lonshift
 end
 
-function hgridshiftparams(Datumₛ, Datumₜ, (lat, lon))
+function hgridshiftparams(Datumₛ, Datumₜ, lat, lon)
   T = numtype(lon)
-  interp = interpolator(Datumₛ, Datumₜ)
-  itp = interp(ustrip(lon), ustrip(lat))
+  itp = interpolatelatlon(Datumₛ, Datumₜ, lat, lon)
   # type assertion is necessary for type stability
   latshift::T = T(itp[1])
   lonshift::T = T(itp[2])

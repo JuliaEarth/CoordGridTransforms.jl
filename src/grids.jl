@@ -10,24 +10,65 @@ GeoTIFF file used in transforms that convert source `Datumₛ` to target `Datum�
 function geotiff end
 
 # cache interpolator objects to avoid interpolating the same grid twice
-const INTERPOLATOR = IdDict()
+const INTERPOLATORS = IdDict()
 
 """
-    interpolator(Datumₛ, Datumₜ)
+    interpolatelatlon(Datumₛ, Datumₜ, lat, lon)
 
-Linear interpolation of GeoTIFF grid that converts `Datumₛ` to `Datumₜ`.
-All of the GeoTIFF channels are combined into the interpolated grid as a vector.
+Interpolated value in the grid that convert `Datumₛ` to `Datumₜ` 
+of the coordinate with latitude `lat` and longitude `lon`.
 """
-function interpolator(Datumₛ, Datumₜ)
-  if haskey(INTERPOLATOR, (Datumₛ, Datumₜ))
-    return INTERPOLATOR[(Datumₛ, Datumₜ)]
+function interpolatelatlon(Datumₛ, Datumₜ, lat, lon)
+  interps = interpolators(Datumₛ, Datumₜ)
+  _interpolatelatlon(interps, ustrip(lat), ustrip(lon))
+end
+
+function _interpolatelatlon(interps::AbstractVector, lat, lon)
+  @inbounds for interp in interps
+    (lonmin, lonmax), (latmin, latmax) = bounds(interp)
+    if lonmin < lon < lonmax && latmin < lat < latmax
+      return interp(lon, lat)
+    end
+  end
+  throw(ArgumentError("coordinates outside of the transform domain"))
+end
+
+_interpolatelatlon(interp, lat, lon) = interp(lon, lat)
+
+"""
+    interpolators(Datumₛ, Datumₜ)
+
+Linear interpolators of the GeoTIFF grid that converts `Datumₛ` to `Datumₜ`.
+All of the GeoTIFF channels are combined into the interpolated grids as a vector.
+"""
+function interpolators(Datumₛ, Datumₜ)
+  if haskey(INTERPOLATORS, (Datumₛ, Datumₜ))
+    return INTERPOLATORS[(Datumₛ, Datumₜ)]
   end
 
   # download geotiff from PROJ CDN
   file = downloadgeotiff(Datumₛ, Datumₜ)
-  geotiff = GeoTIFF.load(file)
+  geotiff = GeoTIFF.load(file, verbose=false)
 
-  # construct the interpolation grid
+  # interpolator of each grid
+  interps = if geotiff isa GeoTIFF.GeoTIFFImageIterator
+    map(interpolator, geotiff)
+  else
+    interpolator(geotiff)
+  end
+
+  # store interpolators in cache
+  INTERPOLATORS[(Datumₛ, Datumₜ)] = interps
+
+  interps
+end
+
+"""
+    interpolator(geotiff)
+
+Linear interpolator of the `geotiff` grid.
+"""
+function interpolator(geotiff)
   img = GeoTIFF.image(geotiff)
   grid = mappedarray(img) do color
     N = GeoTIFF.nchannels(color)
@@ -59,12 +100,8 @@ function interpolator(Datumₛ, Datumₜ)
     grid = @view grid[:, n:-1:1]
   end
 
-  # create the interpolation
-  interp = interpolate((lonrange, latrange), grid, Gridded(Linear()))
-
-  INTERPOLATOR[(Datumₛ, Datumₜ)] = interp
-
-  interp
+  # create the interpolator
+  interpolate((lonrange, latrange), grid, Gridded(Linear()))
 end
 
 """
@@ -118,14 +155,13 @@ geotiff(::Type{NAD27}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA27SCRS.tif"
 
 geotiff(::Type{NAD27}, ::Type{NAD83CSRS{3}}) = "ca_nrc_TO27CSv1.tif"
 
-# TODO: unsupported GeoTIFF format: StridedTaggedImage
-# geotiff(::Type{NAD27}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_27_05.tif"
+geotiff(::Type{NAD27}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_27_05.tif"
 
-# geotiff(::Type{NAD83}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA83SCRS.tif"
+geotiff(::Type{NAD83}, ::Type{NAD83CSRS{2}}) = "ca_nrc_NA83SCRS.tif"
 
-# geotiff(::Type{NAD83}, ::Type{NAD83CSRS{3}}) = "ca_nrc_ON83CSv1.tif"
+geotiff(::Type{NAD83}, ::Type{NAD83CSRS{3}}) = "ca_nrc_ON83CSv1.tif"
 
-# geotiff(::Type{NAD83}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_93_05.tif"
+geotiff(::Type{NAD83}, ::Type{NAD83CSRS{4}}) = "ca_nrc_BC_93_05.tif"
 
 # TODO: grid files not found in PROJ CDN
 # geotiff(::Type{NAD83}, ::Type{NAD83CSRS{6}}) = ""
@@ -156,8 +192,7 @@ geotiff(::Type{OSGB36}, ::Type{<:ETRF}) = "uk_os_OSTN15_NTv2_OSGBtoETRS.tif"
 
 geotiff(::Type{PD83}, ::Type{<:ETRF}) = "de_tlbg_thueringen_NTv2gridTH.tif"
 
-# TODO: unsupported GeoTIFF format: StridedTaggedImage
-# geotiff(::Type{RD83}, ::Type{<:ETRF}) = "de_geosn_NTv2_SN.tif"
+geotiff(::Type{RD83}, ::Type{<:ETRF}) = "de_geosn_NTv2_SN.tif"
 
 geotiff(::Type{SAD69}, ::Type{SIRGAS2000}) = "br_ibge_SAD69_003.tif"
 

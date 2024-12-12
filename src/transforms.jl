@@ -46,11 +46,26 @@ include("transforms/geocgridtranslation.jl")
 # https://epsg.org/transformation_9107/NAD27-to-NAD83-CSRS-v3-5.html
 @hgridshift NAD27 NAD83CSRS{3}
 
+# https://epsg.org/transformation_9115/NAD27-to-NAD83-CSRS-v4-10.html
+@hgridshift NAD27 NAD83CSRS{4}
+
+# https://epsg.org/transformation_9241/NAD83-to-NAD83-CSRS-v2-1.html
+@hgridshift NAD83 NAD83CSRS{2}
+
+# https://epsg.org/transformation_9110/NAD83-to-NAD83-CSRS-v3-5.html
+@hgridshift NAD83 NAD83CSRS{3}
+
+# https://epsg.org/transformation_9119/NAD83-to-NAD83-CSRS-v4-9.html
+@hgridshift NAD83 NAD83CSRS{4}
+
 # https://epsg.org/transformation_7709/OSGB36-to-ETRS89-2.html
 @hgridshift OSGB36 ETRF
 
 # https://epsg.org/transformation_10677/PD-83-to-ETRS89-2.html
 @hgridshift PD83 ETRF
+
+# https://epsg.org/transformation_6948/RD-83-to-ETRS89-2.html
+@hgridshift RD83 ETRF
 
 # https://epsg.org/transformation_5529/SAD69-96-to-SIRGAS-2000-1.html
 @hgridshift SAD96 SIRGAS2000
