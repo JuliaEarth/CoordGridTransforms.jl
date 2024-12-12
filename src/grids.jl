@@ -186,6 +186,8 @@ geotiff(::Type{NTF}, ::Type{RGF93v2b}) = "fr_ign_gr3df97a.tif"
 
 geotiff(::Type{OSGB36}, ::Type{<:ETRF}) = "uk_os_OSTN15_NTv2_OSGBtoETRS.tif"
 
+geotiff(::Type{PD83}, ::Type{<:ETRF}) = "de_tlbg_thueringen_NTv2gridTH.tif"
+
 geotiff(::Type{RD83}, ::Type{<:ETRF}) = "de_geosn_NTv2_SN.tif"
 
 geotiff(::Type{SAD69}, ::Type{SIRGAS2000}) = "br_ibge_SAD69_003.tif"
