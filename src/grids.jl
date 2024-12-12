@@ -24,16 +24,33 @@ function interpolatelatlon(Datumₛ, Datumₜ, lat, lon)
 end
 
 function _interpolatelatlon(interps::AbstractVector, lat, lon)
-  @inbounds for interp in interps
-    (lonmin, lonmax), (latmin, latmax) = bounds(interp)
-    if lonmin < lon < lonmax && latmin < lat < latmax
-      return interp(lon, lat)
+  itp = zero(eltype(first(interps)))
+  for interp in interps
+    if _inbounds(interp, lat, lon)
+      itp = @inbounds interp(lon, lat)
+      break
     end
   end
-  throw(ArgumentError("coordinates outside of the transform domain"))
+  itp
 end
 
-_interpolatelatlon(interp, lat, lon) = interp(lon, lat)
+function _interpolatelatlon(interp, lat, lon)
+  interp′ = extrapolate(interp, zero(eltype(interp)))
+  interp′(lon, lat)
+end
+
+# function _interpolatelatlon(interp, lat, lon)
+#   if _inbounds(interp, lat, lon)
+#     @inbounds interp(lon, lat)
+#   else
+#     zero(eltype(interp))
+#   end
+# end
+
+function _inbounds(interp, lat, lon)
+  (lonmin, lonmax), (latmin, latmax) = bounds(interp)
+  lonmin < lon < lonmax && latmin < lat < latmax
+end
 
 """
     interpolators(Datumₛ, Datumₜ)
