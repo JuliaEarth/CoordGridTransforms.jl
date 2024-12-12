@@ -264,6 +264,6 @@
   @test allapprox(c3, c1)
 
   # error: coordinates outside of the transform domain
-  c1 = LatLon{SAD96}(T(10), T(-10))
-  @test_throws ArgumentError convert(LatLon{SIRGAS2000}, c1)
+  c1 = LatLon{RD83}(T(65), T(25))
+  @test_throws ArgumentError convert(LatLon{ETRFLatest}, c1)
 end

@@ -19,17 +19,21 @@ Interpolated value in the grid that convert `Datumₛ` to `Datumₜ`
 of the coordinate with latitude `lat` and longitude `lon`.
 """
 function interpolatelatlon(Datumₛ, Datumₜ, lat, lon)
-  lat′ = ustrip(lat)
-  lon′ = ustrip(lon)
   interps = interpolators(Datumₛ, Datumₜ)
-  for interp in interps
+  _interpolatelatlon(interps, ustrip(lat), ustrip(lon))
+end
+
+function _interpolatelatlon(interps::AbstractVector, lat, lon)
+  @inbounds for interp in interps
     (lonmin, lonmax), (latmin, latmax) = bounds(interp)
-    if lonmin < lon′ < lonmax && latmin < lat′ < latmax
-      return interp(lon′, lat′)
+    if lonmin < lon < lonmax && latmin < lat < latmax
+      return interp(lon, lat)
     end
   end
   throw(ArgumentError("coordinates outside of the transform domain"))
 end
+
+_interpolatelatlon(interp, lat, lon) = interp(lon, lat)
 
 """
     interpolators(Datumₛ, Datumₜ)
@@ -50,7 +54,7 @@ function interpolators(Datumₛ, Datumₜ)
   interps = if geotiff isa GeoTIFF.GeoTIFFImageIterator
     map(interpolator, geotiff)
   else
-    [interpolator(geotiff)]
+    interpolator(geotiff)
   end
 
   # store interpolators in cache
