@@ -35,17 +35,12 @@ function _interpolatelatlon(interps::AbstractVector, lat, lon)
 end
 
 function _interpolatelatlon(interp, lat, lon)
-  interp′ = extrapolate(interp, zero(eltype(interp)))
-  interp′(lon, lat)
+  if _inbounds(interp, lat, lon)
+    @inbounds interp(lon, lat)
+  else
+    zero(eltype(interp))
+  end
 end
-
-# function _interpolatelatlon(interp, lat, lon)
-#   if _inbounds(interp, lat, lon)
-#     @inbounds interp(lon, lat)
-#   else
-#     zero(eltype(interp))
-#   end
-# end
 
 function _inbounds(interp, lat, lon)
   (lonmin, lonmax), (latmin, latmax) = bounds(interp)
