@@ -283,8 +283,9 @@
   @test c2.alt ≈ c1.alt
 
   # geocgridtranslation
-  # c1 = LatLon{NTF}(T(65), T(25))
-  # c2 = convert(LatLon{RGF93v1}, c1)
-  # @test c2.lat ≈ c1.lat
-  # @test c2.lon ≈ c1.lon
+  c1 = convert(Cartesian, LatLon{NTF}(T(65), T(25)))
+  c2 = convert(Cartesian{RGF93v1}, c1)
+  @test c2.x ≈ c1.x
+  @test c2.y ≈ c1.y
+  @test c2.z ≈ c1.z
 end
