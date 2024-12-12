@@ -46,7 +46,7 @@ function pointmotionparams(Datumₛ, Datumₜ, lat, lon, ϕ, h)
   a = T(ustrip(m, majoraxis(🌎)))
   e² = T(eccentricity²(🌎))
 
-  itp = interpolatepoint(Datumₛ, Datumₜ, lat, lon)
+  itp = interpolatelatlon(Datumₛ, Datumₜ, lat, lon)
   # type assertion is necessary for type stability
   # convert millimeters to meters
   eᵥ::T = T(itp[1]) / 1000

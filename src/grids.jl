@@ -10,15 +10,15 @@ GeoTIFF file used in transforms that convert source `Datumₛ` to target `Datum�
 function geotiff end
 
 # cache interpolator objects to avoid interpolating the same grid twice
-const INTERPOLATOR = IdDict()
+const INTERPOLATORS = IdDict()
 
 """
-    interpolatepoint(Datumₛ, Datumₜ, lat, lon)
+    interpolatelatlon(Datumₛ, Datumₜ, lat, lon)
 
 Interpolated value in the grid that convert `Datumₛ` to `Datumₜ` 
-of the point with latitude `lat` and longitude `lon`.
+of the coordinate with latitude `lat` and longitude `lon`.
 """
-function interpolatepoint(Datumₛ, Datumₜ, lat, lon)
+function interpolatelatlon(Datumₛ, Datumₜ, lat, lon)
   lat′ = ustrip(lat)
   lon′ = ustrip(lon)
   interps = interpolators(Datumₛ, Datumₜ)
@@ -38,8 +38,8 @@ Linear interpolators of the GeoTIFF grid that converts `Datumₛ` to `Datumₜ`.
 All of the GeoTIFF channels are combined into the interpolated grids as a vector.
 """
 function interpolators(Datumₛ, Datumₜ)
-  if haskey(INTERPOLATOR, (Datumₛ, Datumₜ))
-    return INTERPOLATOR[(Datumₛ, Datumₜ)]
+  if haskey(INTERPOLATORS, (Datumₛ, Datumₜ))
+    return INTERPOLATORS[(Datumₛ, Datumₜ)]
   end
 
   # download geotiff from PROJ CDN
@@ -54,7 +54,7 @@ function interpolators(Datumₛ, Datumₜ)
   end
 
   # store interpolators in cache
-  INTERPOLATOR[(Datumₛ, Datumₜ)] = interps
+  INTERPOLATORS[(Datumₛ, Datumₜ)] = interps
 
   interps
 end
