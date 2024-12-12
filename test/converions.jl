@@ -263,7 +263,28 @@
   c3 = convert(LatLon{NTF}, c2)
   @test allapprox(c3, c1)
 
-  # error: coordinates outside of the transform domain
+  # coordinates outside the grid bounds
+  # hgridshift
+  c1 = LatLon{SAD96}(T(10), T(-10))
+  c2 = convert(LatLon{SIRGAS2000}, c1)
+  @test c2.lat ≈ c1.lat
+  @test c2.lon ≈ c1.lon
+
   c1 = LatLon{RD83}(T(65), T(25))
-  @test_throws ArgumentError convert(LatLon{ETRFLatest}, c1)
+  c2 = convert(LatLon{ETRFLatest}, c1)
+  @test c2.lat ≈ c1.lat
+  @test c2.lon ≈ c1.lon
+
+  # pointmotion
+  c1 = LatLonAlt{NAD83CSRS{3}}(T(90), T(10), T(1))
+  c2 = convert(LatLonAlt{NAD83CSRS{4}}, c1)
+  @test c2.lat ≈ c1.lat
+  @test c2.lon ≈ c1.lon
+  @test c2.alt ≈ c1.alt
+
+  # geocgridtranslation
+  # c1 = LatLon{NTF}(T(65), T(25))
+  # c2 = convert(LatLon{RGF93v1}, c1)
+  # @test c2.lat ≈ c1.lat
+  # @test c2.lon ≈ c1.lon
 end
