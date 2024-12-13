@@ -29,6 +29,13 @@ macro hgridshift(Datumₛ, Datumₜ)
   esc(expr)
 end
 
+# Adapted from PROJ coordinate transformation software
+# Initial PROJ 4.3 public domain code was put as Frank Warmerdam as copyright
+# holder, but he didn't mean to imply he did the work. Essentially all work was
+# done by Gerald Evenden.
+
+# source code: https://github.com/OSGeo/PROJ/blob/master/src/grids.cpp
+
 function hgridshiftfwd(Datumₛ, Datumₜ, (lat, lon))
   latshift, lonshift = hgridshiftparams(Datumₛ, Datumₜ, lat, lon)
   lat + latshift, lon + lonshift
