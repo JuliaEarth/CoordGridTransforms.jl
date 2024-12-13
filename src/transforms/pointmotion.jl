@@ -50,7 +50,8 @@ function pointmotionbwd(Datumₛ, Datumₜ, (lat, lon, alt))
   λᵢ = ustrip(deg2rad(lon))
   ϕᵢ = ustrip(deg2rad(lat))
   hᵢ = ustrip(m, alt)
-
+  
+  tol = atol(λᵢ)
   for _ in 1:MAXITER
     λᵢ₋₁ = λᵢ
     ϕᵢ₋₁ = ϕᵢ
@@ -61,7 +62,7 @@ function pointmotionbwd(Datumₛ, Datumₜ, (lat, lon, alt))
     λᵢ = λᵢ₋₁ - λₛ
     ϕᵢ = ϕᵢ₋₁ - ϕₛ
     hᵢ = hᵢ₋₁ - hₛ
-    if hypot(λᵢ - λᵢ₋₁, ϕᵢ - ϕᵢ₋₁, hᵢ - hᵢ₋₁) > TOL
+    if hypot(λᵢ - λᵢ₋₁, ϕᵢ - ϕᵢ₋₁, hᵢ - hᵢ₋₁) > tol
       break
     end
   end
