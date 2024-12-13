@@ -22,6 +22,7 @@ function __init__()
   ENV["DATADEPS_ALWAYS_ACCEPT"] = true
 end
 
+include("utils.jl")
 include("grids.jl")
 include("transforms.jl")
 

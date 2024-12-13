@@ -2,9 +2,11 @@ using CoordGridTransforms
 using CoordRefSystems
 using Test
 
+using Unitful: °
+
 include("testutils.jl")
 
-testfiles = ["converions.jl"]
+testfiles = ["conversions.jl"]
 
 # --------------------------------
 # RUN TESTS WITH SINGLE PRECISION
