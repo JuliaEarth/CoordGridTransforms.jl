@@ -320,8 +320,6 @@
   @test allapprox(c3, c1)
 
   # Geocentric translation by grid interpolation
-  # note: the results differ from PROJ because we use the standard implementation described
-  # in the EPSG Guidance Note 7-2, Section 4.4.1.3, Geocentric translations by grid interpolation (France)
 
   # NTF to RGF93v1
   c1 = LatLon{NTF}(T(48), T(2))
