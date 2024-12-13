@@ -47,9 +47,9 @@ function hgridshiftbwd(Datumₛ, Datumₜ, (lat, lon))
   latᵢ = lat - latshift
   lonᵢ = lon - lonshift
   for _ in 1:MAXITER
-    latᵢₜ, lonᵢₜ = hgridshiftfwd(Datumₛ, Datumₜ, (latᵢ, lonᵢ))
-    latΔ = latᵢₜ - lat
-    lonΔ = lonᵢₜ - lon
+    latᵢ′, lonᵢ′ = hgridshiftfwd(Datumₛ, Datumₜ, (latᵢ, lonᵢ))
+    latΔ = latᵢ′ - lat
+    lonΔ = lonᵢ′ - lon
     if hypot(latΔ, lonΔ) ≤ tol
       break
     end

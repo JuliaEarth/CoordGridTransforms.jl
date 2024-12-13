@@ -59,13 +59,13 @@ function pointmotionbwd(Datumₛ, Datumₜ, (lat, lon, alt))
   for _ in 1:MAXITER
     latᵢ = rad2deg(ϕᵢ) * °
     lonᵢ = rad2deg(λᵢ) * °
-    λₛ, ϕₛ, hₛ = pointmotionparams(Datumₛ, Datumₜ, latᵢ, lonᵢ, ϕᵢ, hᵢ)
-    λᵢₜ = λᵢ + λₛ
-    ϕᵢₜ = ϕᵢ + ϕₛ
-    hᵢₜ = hᵢ + hₛ
-    λΔ = λᵢₜ - λ
-    ϕΔ = ϕᵢₜ - ϕ
-    hΔ = hᵢₜ - h
+    λᵢₛ, ϕᵢₛ, hᵢₛ = pointmotionparams(Datumₛ, Datumₜ, latᵢ, lonᵢ, ϕᵢ, hᵢ)
+    λᵢ′ = λᵢ + λᵢₛ
+    ϕᵢ′ = ϕᵢ + ϕᵢₛ
+    hᵢ′ = hᵢ + hᵢₛ
+    λΔ = λᵢ′ - λ
+    ϕΔ = ϕᵢ′ - ϕ
+    hΔ = hᵢ′ - h
     if hypot(λΔ, ϕΔ, hΔ) ≤ tol
       break
     end
