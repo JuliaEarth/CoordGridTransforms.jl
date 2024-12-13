@@ -35,18 +35,19 @@ function hgridshiftfwd(Datumₛ, Datumₜ, (lat, lon))
 end
 
 function hgridshiftbwd(Datumₛ, Datumₜ, (lat, lon))
-  latᵢ = lat
-  lonᵢ = lon
-  tol = atol(numtype(lonᵢ))
+  tol = atol(numtype(lon))
+  latshift, lonshift = hgridshiftparams(Datumₛ, Datumₜ, lat, lon)
+  latᵢ = lat - latshift
+  lonᵢ = lon - lonshift
   for _ in 1:MAXITER
-    latᵢ₋₁ = latᵢ
-    lonᵢ₋₁ = lonᵢ
-    latshift, lonshift = hgridshiftparams(Datumₛ, Datumₜ, latᵢ₋₁, lonᵢ₋₁)
-    latᵢ = latᵢ₋₁ - latshift
-    lonᵢ = lonᵢ₋₁ - lonshift
-    if hypot(latᵢ - latᵢ₋₁, lonᵢ - lonᵢ₋₁) ≤ tol
+    latᵢₜ, lonᵢₜ = hgridshiftfwd(Datumₛ, Datumₜ, (latᵢ, lonᵢ))
+    latΔ = latᵢₜ - lat
+    lonΔ = lonᵢₜ - lon
+    if hypot(latΔ, lonΔ) ≤ tol
       break
     end
+    latᵢ -= latΔ
+    lonᵢ -= lonΔ
   end
   latᵢ, lonᵢ
 end

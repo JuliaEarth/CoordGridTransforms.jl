@@ -47,24 +47,31 @@ function pointmotionfwd(Datumₛ, Datumₜ, (lat, lon, alt))
 end
 
 function pointmotionbwd(Datumₛ, Datumₜ, (lat, lon, alt))
-  λᵢ = ustrip(deg2rad(lon))
-  ϕᵢ = ustrip(deg2rad(lat))
-  hᵢ = ustrip(m, alt)
-  
-  tol = atol(λᵢ)
+  λ = ustrip(deg2rad(lon))
+  ϕ = ustrip(deg2rad(lat))
+  h = ustrip(m, alt)
+  tol = atol(λ)
+
+  λₛ, ϕₛ, hₛ = pointmotionparams(Datumₛ, Datumₜ, lat, lon, ϕ, h)
+  λᵢ = λ - λₛ
+  ϕᵢ = ϕ - ϕₛ
+  hᵢ = h - hₛ
   for _ in 1:MAXITER
-    λᵢ₋₁ = λᵢ
-    ϕᵢ₋₁ = ϕᵢ
-    hᵢ₋₁ = hᵢ
-    latᵢ₋₁ = rad2deg(ϕᵢ₋₁) * °
-    lonᵢ₋₁ = rad2deg(λᵢ₋₁) * °
-    λₛ, ϕₛ, hₛ = pointmotionparams(Datumₛ, Datumₜ, latᵢ₋₁, lonᵢ₋₁, ϕᵢ₋₁, hᵢ₋₁)
-    λᵢ = λᵢ₋₁ - λₛ
-    ϕᵢ = ϕᵢ₋₁ - ϕₛ
-    hᵢ = hᵢ₋₁ - hₛ
-    if hypot(λᵢ - λᵢ₋₁, ϕᵢ - ϕᵢ₋₁, hᵢ - hᵢ₋₁) ≤ tol
+    latᵢ = rad2deg(ϕᵢ) * °
+    lonᵢ = rad2deg(λᵢ) * °
+    λₛ, ϕₛ, hₛ = pointmotionparams(Datumₛ, Datumₜ, latᵢ, lonᵢ, ϕᵢ, hᵢ)
+    λᵢₜ = λᵢ + λₛ
+    ϕᵢₜ = ϕᵢ + ϕₛ
+    hᵢₜ = hᵢ + hₛ
+    λΔ = λᵢₜ - λ
+    ϕΔ = ϕᵢₜ - ϕ
+    hΔ = hᵢₜ - h
+    if hypot(λΔ, ϕΔ, hΔ) ≤ tol
       break
     end
+    λᵢ -= λΔ
+    ϕᵢ -= ϕΔ
+    hᵢ -= hΔ
   end
 
   # https://github.com/PainterQubits/Unitful.jl/issues/753
