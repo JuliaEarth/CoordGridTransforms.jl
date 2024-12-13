@@ -1,6 +1,5 @@
 using CoordGridTransforms
 using CoordRefSystems
-using Unitful
 using Test
 
 using Unitful: °
