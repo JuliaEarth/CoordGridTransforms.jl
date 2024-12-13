@@ -18,6 +18,12 @@ macro pointmotion(Datumₛ, Datumₜ)
       latlonalt′ = pointmotionfwd(Dₛ, Dₜ, latlonalt)
       LatLonAlt{Dₜ}(latlonalt′...)
     end
+
+    function Base.convert(::Type{LatLonAlt{Dₛ}}, coords::LatLonAlt{Dₜ}) where {Dₛ<:$Datumₛ,Dₜ<:$Datumₜ}
+      latlonalt = (coords.lat, coords.lon, coords.alt)
+      latlonalt′ = pointmotionbwd(Dₛ, Dₜ, latlonalt)
+      LatLonAlt{Dₛ}(latlonalt′...)
+    end
   end
   esc(expr)
 end
@@ -38,6 +44,34 @@ function pointmotionfwd(Datumₛ, Datumₜ, (lat, lon, alt))
   alt′ = uconvert(unit(alt), h′ * m)
 
   lat′, lon′, alt′
+end
+
+function pointmotionbwd(Datumₛ, Datumₜ, (lat, lon, alt))
+  λᵢ = ustrip(deg2rad(lon))
+  ϕᵢ = ustrip(deg2rad(lat))
+  hᵢ = ustrip(m, alt)
+
+  for _ in 1:MAXITER
+    λᵢ₋₁ = λᵢ
+    ϕᵢ₋₁ = ϕᵢ
+    hᵢ₋₁ = hᵢ
+    latᵢ₋₁ = rad2deg(ϕᵢ₋₁) * °
+    lonᵢ₋₁ = rad2deg(λᵢ₋₁) * °
+    λₛ, ϕₛ, hₛ = pointmotionparams(Datumₛ, Datumₜ, latᵢ₋₁, lonᵢ₋₁, ϕᵢ₋₁, hᵢ₋₁)
+    λᵢ = λᵢ₋₁ - λₛ
+    ϕᵢ = ϕᵢ₋₁ - ϕₛ
+    hᵢ = hᵢ₋₁ - hₛ
+    if hypot(λᵢ - λᵢ₋₁, ϕᵢ - ϕᵢ₋₁, hᵢ - hᵢ₋₁) > TOL
+      break
+    end
+  end
+
+  # https://github.com/PainterQubits/Unitful.jl/issues/753
+  lonᵢ = rad2deg(λᵢ) * °
+  latᵢ = rad2deg(ϕᵢ) * °
+  altᵢ = uconvert(unit(alt), hᵢ * m)
+
+  latᵢ, lonᵢ, altᵢ
 end
 
 function pointmotionparams(Datumₛ, Datumₜ, lat, lon, ϕ, h)

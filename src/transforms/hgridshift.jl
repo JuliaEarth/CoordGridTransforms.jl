@@ -19,6 +19,12 @@ macro hgridshift(Datumₛ, Datumₜ)
       latlon′ = hgridshiftfwd(Dₛ, Dₜ, latlon)
       LatLon{Dₜ}(latlon′...)
     end
+
+    function Base.convert(::Type{LatLon{Dₛ}}, coords::LatLon{Dₜ}) where {Dₛ<:$Datumₛ,Dₜ<:$Datumₜ}
+      latlon = (coords.lat, coords.lon)
+      latlon′ = hgridshiftbwd(Dₛ, Dₜ, latlon)
+      LatLon{Dₛ}(latlon′...)
+    end
   end
   esc(expr)
 end
@@ -26,6 +32,26 @@ end
 function hgridshiftfwd(Datumₛ, Datumₜ, (lat, lon))
   latshift, lonshift = hgridshiftparams(Datumₛ, Datumₜ, lat, lon)
   lat + latshift, lon + lonshift
+end
+
+const MAXITER = 10
+
+const TOL = 1e12
+
+function hgridshiftbwd(Datumₛ, Datumₜ, (lat, lon))
+  latᵢ = lat
+  lonᵢ = lon
+  for _ in 1:MAXITER
+    latᵢ₋₁ = latᵢ
+    lonᵢ₋₁ = lonᵢ
+    latshift, lonshift = hgridshiftparams(Datumₛ, Datumₜ, latᵢ₋₁, lonᵢ₋₁)
+    latᵢ = latᵢ₋₁ - latshift
+    lonᵢ = lonᵢ₋₁ - lonshift
+    if hypot(latᵢ - latᵢ₋₁, lonᵢ - lonᵢ₋₁) > TOL
+      break
+    end
+  end
+  latᵢ, lonᵢ
 end
 
 function hgridshiftparams(Datumₛ, Datumₜ, lat, lon)
