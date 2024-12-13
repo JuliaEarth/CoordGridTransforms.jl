@@ -46,29 +46,42 @@ function pointmotionfwd(Datumₛ, Datumₜ, (lat, lon, alt))
   lat′, lon′, alt′
 end
 
+# Adapted from PROJ coordinate transformation software
+# Initial PROJ 4.3 public domain code was put as Frank Warmerdam as copyright
+# holder, but he didn't mean to imply he did the work. Essentially all work was
+# done by Gerald Evenden.
+
+# reference code: https://github.com/OSGeo/PROJ/blob/master/src/grids.cpp
+
 function pointmotionbwd(Datumₛ, Datumₜ, (lat, lon, alt))
   λ = ustrip(deg2rad(lon))
   ϕ = ustrip(deg2rad(lat))
   h = ustrip(m, alt)
   tol = atol(λ)
 
+  # initial guess
   λₛ, ϕₛ, hₛ = pointmotionparams(Datumₛ, Datumₜ, lat, lon, ϕ, h)
   λᵢ = λ - λₛ
   ϕᵢ = ϕ - ϕₛ
   hᵢ = h - hₛ
   for _ in 1:MAXITER
+    # to check if the guess is equivalent to the original Datumₛ coordinates,
+    # forward the guess coordinates to compare them with the Datumₜ input coordinates
     latᵢ = rad2deg(ϕᵢ) * °
     lonᵢ = rad2deg(λᵢ) * °
     λᵢₛ, ϕᵢₛ, hᵢₛ = pointmotionparams(Datumₛ, Datumₜ, latᵢ, lonᵢ, ϕᵢ, hᵢ)
     λᵢ′ = λᵢ + λᵢₛ
     ϕᵢ′ = ϕᵢ + ϕᵢₛ
     hᵢ′ = hᵢ + hᵢₛ
+    # difference between forward coordinates and input coordinates for comparison
     λΔ = λᵢ′ - λ
     ϕΔ = ϕᵢ′ - ϕ
     hΔ = hᵢ′ - h
+    # if the difference is small, stop the iteration
     if hypot(λΔ, ϕΔ, hΔ) ≤ tol
       break
     end
+    # otherwise, subtract the difference and continue
     λᵢ -= λΔ
     ϕᵢ -= ϕΔ
     hᵢ -= hΔ

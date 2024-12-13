@@ -29,30 +29,36 @@ macro hgridshift(Datumₛ, Datumₜ)
   esc(expr)
 end
 
-# Adapted from PROJ coordinate transformation software
-# Initial PROJ 4.3 public domain code was put as Frank Warmerdam as copyright
-# holder, but he didn't mean to imply he did the work. Essentially all work was
-# done by Gerald Evenden.
-
-# source code: https://github.com/OSGeo/PROJ/blob/master/src/grids.cpp
-
 function hgridshiftfwd(Datumₛ, Datumₜ, (lat, lon))
   latshift, lonshift = hgridshiftparams(Datumₛ, Datumₜ, lat, lon)
   lat + latshift, lon + lonshift
 end
 
+# Adapted from PROJ coordinate transformation software
+# Initial PROJ 4.3 public domain code was put as Frank Warmerdam as copyright
+# holder, but he didn't mean to imply he did the work. Essentially all work was
+# done by Gerald Evenden.
+
+# reference code: https://github.com/OSGeo/PROJ/blob/master/src/grids.cpp
+
 function hgridshiftbwd(Datumₛ, Datumₜ, (lat, lon))
   tol = atol(numtype(lon))
+  # initial guess
   latshift, lonshift = hgridshiftparams(Datumₛ, Datumₜ, lat, lon)
   latᵢ = lat - latshift
   lonᵢ = lon - lonshift
   for _ in 1:MAXITER
+    # to check if the guess is equivalent to the original Datumₛ coordinates,
+    # forward the guess coordinates to compare them with the Datumₜ input coordinates
     latᵢ′, lonᵢ′ = hgridshiftfwd(Datumₛ, Datumₜ, (latᵢ, lonᵢ))
+    # difference between forward coordinates and input coordinates for comparison
     latΔ = latᵢ′ - lat
     lonΔ = lonᵢ′ - lon
+    # if the difference is small, stop the iteration
     if hypot(latΔ, lonΔ) ≤ tol
       break
     end
+    # otherwise, subtract the difference and continue
     latᵢ -= latΔ
     lonᵢ -= lonΔ
   end
