@@ -21,13 +21,13 @@
   c2 = convert(LatLon{ETRFLatest}, c1)
   @test allapprox(c2, LatLon{ETRFLatest}(T(49.998857302798164), T(9.998811455567678)))
   c3 = convert(LatLon{DHDN}, c2)
-  @test allapprox(c3, c1, atol=T(1e-6)°)
+  @test allapprox(c3, c1)
 
   c1 = LatLon{DHDN}(T(50.5), T(10.5))
   c2 = convert(LatLon{ETRFLatest}, c1)
   @test allapprox(c2, LatLon{ETRFLatest}(T(50.4988057911396), T(10.498728909227584)))
   c3 = convert(LatLon{DHDN}, c2)
-  @test allapprox(c3, c1, atol=T(1e-6)°)
+  @test allapprox(c3, c1)
 
   # ED50 to ETRF (ETRS89)
   c1 = LatLon{ED50}(T(42), T(2))
@@ -177,39 +177,39 @@
   c2 = convert(LatLon{ETRFLatest}, c1)
   @test allapprox(c2, LatLon{ETRFLatest}(T(55.00005659972214), T(-3.501344154410892)))
   c3 = convert(LatLon{OSGB36}, c2)
-  @test allapprox(c3, c1, atol=T(1e-6)°)
+  @test allapprox(c3, c1)
 
   c1 = LatLon{OSGB36}(T(55.5), T(-2))
   c2 = convert(LatLon{ETRFLatest}, c1)
   @test allapprox(c2, LatLon{ETRFLatest}(T(55.50001349305527), T(-2.0015656316280364)))
   c3 = convert(LatLon{OSGB36}, c2)
-  @test allapprox(c3, c1, atol=T(1e-6)°)
+  @test allapprox(c3, c1)
 
   # PD/83 to ETRF (ETRS89)
   c1 = LatLon{PD83}(T(50.94), T(11.25))
   c2 = convert(LatLon{ETRFLatest}, c1)
   @test allapprox(c2, LatLon{ETRFLatest}(T(50.93875928335719), T(11.248613153855006)))
   c3 = convert(LatLon{PD83}, c2)
-  @test allapprox(c3, c1, atol=T(1e-6)°)
+  @test allapprox(c3, c1)
 
   c1 = LatLon{PD83}(T(51.14), T(11.45))
   c2 = convert(LatLon{ETRFLatest}, c1)
   @test allapprox(c2, LatLon{ETRFLatest}(T(51.138737511105006), T(11.448580215003755)))
   c3 = convert(LatLon{PD83}, c2)
-  @test allapprox(c3, c1, atol=T(1e-6)°)
+  @test allapprox(c3, c1)
 
   # RD/83 to ETRF (ETRS89)
   c1 = LatLon{RD83}(T(52.25), T(12.75))
   c2 = convert(LatLon{ETRFLatest}, c1)
   @test allapprox(c2, LatLon{ETRFLatest}(T(52.24861670891444), T(12.748358176151912)))
   c3 = convert(LatLon{RD83}, c2)
-  @test allapprox(c3, c1, atol=T(1e-6)°)
+  @test allapprox(c3, c1)
 
   c1 = LatLon{RD83}(T(50.5), T(12.65))
   c2 = convert(LatLon{ETRFLatest}, c1)
   @test allapprox(c2, LatLon{ETRFLatest}(T(50.4988229786555), T(12.648406205177308)))
   c3 = convert(LatLon{RD83}, c2)
-  @test allapprox(c3, c1, atol=T(1e-6)°)
+  @test allapprox(c3, c1)
 
   # SAD96 to SIRGAS2000
   c1 = LatLon{SAD96}(T(-15), T(-45))
@@ -222,7 +222,7 @@
   c2 = convert(LatLon{SIRGAS2000}, c1)
   @test allapprox(c2, LatLon{SIRGAS2000}(T(-10.000429661108388), T(-40.000369772215684)))
   c3 = convert(LatLon{SAD96}, c2)
-  @test allapprox(c3, c1, atol=T(1e-2)°)
+  @test allapprox(c3, c1)
 
   # Point Motion with Velocity Grids
   # note: the results differ from PROJ because we use the standard implementation described
