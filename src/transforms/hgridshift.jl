@@ -44,7 +44,7 @@ function hgridshiftbwd(Datumₛ, Datumₜ, (lat, lon))
     latshift, lonshift = hgridshiftparams(Datumₛ, Datumₜ, latᵢ₋₁, lonᵢ₋₁)
     latᵢ = latᵢ₋₁ - latshift
     lonᵢ = lonᵢ₋₁ - lonshift
-    if hypot(latᵢ - latᵢ₋₁, lonᵢ - lonᵢ₋₁) > tol
+    if hypot(latᵢ - latᵢ₋₁, lonᵢ - lonᵢ₋₁) ≤ tol
       break
     end
   end

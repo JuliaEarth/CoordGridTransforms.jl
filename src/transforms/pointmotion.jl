@@ -62,7 +62,7 @@ function pointmotionbwd(Datumₛ, Datumₜ, (lat, lon, alt))
     λᵢ = λᵢ₋₁ - λₛ
     ϕᵢ = ϕᵢ₋₁ - ϕₛ
     hᵢ = hᵢ₋₁ - hₛ
-    if hypot(λᵢ - λᵢ₋₁, ϕᵢ - ϕᵢ₋₁, hᵢ - hᵢ₋₁) > tol
+    if hypot(λᵢ - λᵢ₋₁, ϕᵢ - ϕᵢ₋₁, hᵢ - hᵢ₋₁) ≤ tol
       break
     end
   end
