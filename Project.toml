@@ -1,7 +1,7 @@
 name = "CoordGridTransforms"
 uuid = "1cf1ec0c-22f7-4062-925b-8db09db48fc3"
 authors = ["Elias Carvalho <eliascarvdev@gmail.com> and contributors"]
-version = "0.1.6"
+version = "0.1.7"
 
 [deps]
 CoordRefSystems = "b46f11dc-f210-4604-bfba-323c1ec968cb"
@@ -15,7 +15,7 @@ Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 [compat]
 CoordRefSystems = "0.17"
 DataDeps = "0.7"
-GeoTIFF = "0.4"
+GeoTIFF = "0.5"
 Interpolations = "0.15"
 MappedArrays = "0.4"
 StaticArrays = "1.9"
