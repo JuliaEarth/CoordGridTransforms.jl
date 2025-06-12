@@ -4,8 +4,6 @@ using Test
 
 using Unitful: °
 
-include("testutils.jl")
-
 testfiles = ["conversions.jl"]
 
 # --------------------------------
