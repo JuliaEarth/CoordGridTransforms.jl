@@ -1,7 +1,7 @@
 name = "CoordGridTransforms"
 uuid = "1cf1ec0c-22f7-4062-925b-8db09db48fc3"
 authors = ["Elias Carvalho <eliascarvdev@gmail.com> and contributors"]
-version = "0.1.9"
+version = "0.1.10"
 
 [deps]
 CoordRefSystems = "b46f11dc-f210-4604-bfba-323c1ec968cb"
